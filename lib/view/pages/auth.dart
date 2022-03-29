@@ -1,10 +1,12 @@
 import 'package:companera/constants/button_styles.dart';
+import 'package:companera/view/pages/home.dart';
 import 'package:companera/view/widgets/carousel_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/app-colors.dart';
+import '../../services/authentication.dart';
 import '../../utils/utils.dart';
 import '../widgets/darkRadialBackground.dart';
 import '../widgets/image_outlined_button.dart';
@@ -31,8 +33,8 @@ class _AuthScreenState extends State<AuthScreen> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
       margin: EdgeInsets.symmetric(horizontal: 8.0),
-      height: 8.0,
-      width: 8.0,
+      height: isActive ? 12 : 8.0,
+      width: isActive ? 12 : 8.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: isActive ? Color(0xFF266FFE) : Color(0xFF666A7A),
@@ -67,15 +69,26 @@ class _AuthScreenState extends State<AuthScreen> {
                               _currentPage = page;
                             });
                           },
-                          children: const <Widget> [
-                            CarouselItem(title: 'Detect Falls', caption: 'Automatically detect falls and alert your \nemergency contacts', image: 'assets/new_fall.png'),
-                            CarouselItem(title: 'Translate \nSign Language', caption: 'Use camera to detect and interpret \nsign language', image: 'assets/sign_language.png'),
-                            CarouselItem(title: 'Read Text \nFrom Images', caption: "Can't read without your glasses? \nJust take a picture of the text, we'll read it for you!", image: 'assets/read_text.png'),
+                          children: const <Widget>[
+                            CarouselItem(
+                                title: 'Detect Falls',
+                                caption:
+                                    'Automatically detect falls and alert your \nemergency contacts',
+                                image: 'assets/new_fall.png'),
+                            CarouselItem(
+                                title: 'Translate \nSign Language',
+                                caption:
+                                    'Use camera to detect and interpret \nsign language',
+                                image: 'assets/sign_language.png'),
+                            CarouselItem(
+                                title: 'Read Text \nFrom Images',
+                                caption:
+                                    "Can't read without your glasses? \nJust take a picture of the text, we'll read it for you!",
+                                image: 'assets/read_text.png'),
                           ]),
                     )),
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                  padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
                   child: SingleChildScrollView(
                     child: Container(
                       child: Column(children: [
@@ -83,12 +96,29 @@ class _AuthScreenState extends State<AuthScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: _buildPageIndicator(),
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: 40),
                         Container(
                           width: double.infinity,
                           height: 60,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showDialog(
+                                    context: context, builder: (context){
+                                  return Container(
+                                    child: Center(child: CircularProgressIndicator()),
+                                  );
+                                },
+                                barrierDismissible: false
+                                );
+                                //TODO: Handle errors
+                                AuthService.signInWithGoogle().then((value) =>
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()))
+                                );
+                              },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       HexColor.fromHex("246CFE")),

@@ -1,3 +1,4 @@
+import 'package:companera/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,7 +17,8 @@ class CarouselItem extends StatelessWidget {
         Positioned(
             right: 0,
             top: 30,
-            child: Image.asset(image, height: 350,)),
+            bottom: 20,
+            child: Image.asset(image, width: Utils.screenWidth,)),
         Positioned(
           bottom: 0,
           left: 20,
