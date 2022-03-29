@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "736882067229",
+    "project_id": "companera-a51f4",
+    "storage_bucket": "companera-a51f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736882067229:android:2c8228361e59846b3c03f4",
+        "android_client_info": {
+          "package_name": "com.anohene.companera"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736882067229-9urle673elgu9qs3hnu7n79fgu5512vg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anohene.companera",
+            "certificate_hash": "acc217446e4b071eb4c2946d98a4eb99cfb33c36"
+          }
+        },
+        {
+          "client_id": "736882067229-6sd6du2nvnamupujt86l7qluaiira0pp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAo6-mVaDR017f0qm3JQmQ4US23RYRnKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736882067229-6sd6du2nvnamupujt86l7qluaiira0pp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "736882067229-bjmfrmfsm3o58u28hdedralb2mthcpdg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.anohene.companera"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
