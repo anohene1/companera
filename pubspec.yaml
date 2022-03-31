@@ -22,6 +22,9 @@ dependencies:
   crypto: ^3.0.1
   provider: ^6.0.2
   shared_preferences: ^2.0.13
+  sensors_plus: ^1.3.0
+  tflite:
+    git: https://github.com/anohene1/flutter_tflite.git
 
 
 dev_dependencies:
