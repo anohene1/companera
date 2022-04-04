@@ -3,12 +3,13 @@ import 'package:companera/view/pages/home.dart';
 import 'package:companera/view/widgets/carousel_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/app-colors.dart';
 import '../../services/authentication.dart';
 import '../../utils/utils.dart';
-import '../widgets/darkRadialBackground.dart';
+import '../widgets/dark_radial_background.dart';
 import '../widgets/image_outlined_button.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -117,7 +118,11 @@ class _AuthScreenState extends State<AuthScreen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HomeScreen()))
-                                );
+                                ).onError((error, stackTrace) async {
+                                  Navigator.pop(context);
+                                  print(error);
+                                  await FlutterPlatformAlert.showAlert(windowTitle: 'Unable to sign in', text: 'Please check your internet connection and try again later');
+                                });
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(

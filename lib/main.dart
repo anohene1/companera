@@ -23,8 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Compañera',
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff246CFE),
+
       ),
       home: AuthService().signedInUser == null ? AuthScreen() : HomeScreen(),
     );
