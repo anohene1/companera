@@ -1,6 +1,6 @@
 import 'package:companera/services/authentication.dart';
 import 'package:companera/view/pages/auth.dart';
-import 'package:companera/view/pages/fall_detection.dart';
+import 'package:companera/view/pages/fall_detection/fall_detection.dart';
 import 'package:companera/view/pages/settings.dart';
 import 'package:companera/view/pages/sign_language.dart';
 import 'package:companera/view/pages/text_recoginition.dart';
@@ -37,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         toolbarHeight: 100,
         title: Text(
-          "Hello, \n${AuthService().signedInUser?.displayName}",
+          // "Hello, \n${AuthService().signedInUser?.displayName}",
+          "Hello, \nIsaac Anohene",
           style: GoogleFonts.raleway(
               // fontWeight: FontWeight.bold,
               fontSize: 40,
