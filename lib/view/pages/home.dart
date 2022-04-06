@@ -35,13 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         centerTitle: false,
         elevation: 0,
-        toolbarHeight: 100,
+        toolbarHeight: 80,
         title: Text(
           // "Hello, \n${AuthService().signedInUser?.displayName}",
           "Hello, \nIsaac Anohene",
           style: GoogleFonts.raleway(
               // fontWeight: FontWeight.bold,
-              fontSize: 40,
+              fontSize: 30,
               color: Colors.white),
         ),
       ),
@@ -54,6 +54,10 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex: currentIndex,
             unselectedItemColor: Colors.white54,
             onTap: (index) {
+              if (index == 3) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
+                return;
+              }
               setState(() {
                 currentIndex = index;
               });
@@ -62,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SalomonBottomBarItem(icon: Icon(LineIcons.running), title: Text('Fall Detection')),
               SalomonBottomBarItem(icon: Icon(LineIcons.signLanguage), title: Text('Sign Language')),
               SalomonBottomBarItem(icon: Icon(LineIcons.bookOpen), title: Text('Read')),
-              SalomonBottomBarItem(icon: Icon(LineIcons.cog), title: Text('Settings')),
+              SalomonBottomBarItem(icon: Icon(LineIcons.cog), title: Text('Settings'),),
             ],
           ),
         ),
@@ -80,14 +84,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 160),
+              padding: EdgeInsets.only(top: 140),
               child: IndexedStack(
                 index: currentIndex,
                 children: [
                   FallDetectionScreen(),
                   SignLanguageScreen(),
                   TextRecognitionScreen(),
-                  Settings()
                 ],
               ),
             )
