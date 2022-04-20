@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:companera/constants/button_styles.dart';
 import 'package:companera/view/widgets/big_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -60,11 +61,11 @@ class _TextRecognitionScreenState extends State<TextRecognitionScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: BigButton(label: 'Pick Image', icon: Icons.photo, onTap: (){
+                  Expanded(child: BigButton(label: 'Pick Image', icon: CupertinoIcons.photo, onTap: (){
                     pickImage(ImageSource.gallery);
                   },)),
                   SizedBox(width: 20,),
-                  Expanded(child: BigButton(label: 'Take Picture', icon: Icons.photo, onTap: () {
+                  Expanded(child: BigButton(label: 'Take Picture', icon: CupertinoIcons.camera, onTap: () {
                     pickImage(ImageSource.camera);
                   },)),
                 ],
@@ -73,9 +74,9 @@ class _TextRecognitionScreenState extends State<TextRecognitionScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: BigButton(label: 'Start Reading', icon: Icons.photo)),
+                  Expanded(child: BigButton(label: 'Start Reading', icon: CupertinoIcons.play_arrow_solid)),
                   SizedBox(width: 20,),
-                  Expanded(child: BigButton(label: 'Stop Reading', icon: Icons.photo)),
+                  Expanded(child: BigButton(label: 'Stop Reading', icon: CupertinoIcons.pause_fill)),
 
                 ],
               )
