@@ -52,5 +52,11 @@
     		</array>
     	</dict>
     </array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Allow access to Photos to be able to choose an image to read text from</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Allow access to Camera to be able to take a picture to read text from</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>I may need to be able to take videos, I'm not very sure about that though</string>
 </dict>
 </plist>

@@ -37,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         toolbarHeight: 80,
         title: Text(
-          // "Hello, \n${AuthService().signedInUser?.displayName}",
-          "Hello, \nIsaac Anohene",
+          "Hello, \n${AuthService().signedInUser?.displayName}",
+          // "Hello, \nIsaac Anohene",
           style: GoogleFonts.raleway(
               // fontWeight: FontWeight.bold,
               fontSize: 30,
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 140),
+              padding: EdgeInsets.only(top: 130),
               child: IndexedStack(
                 index: currentIndex,
                 children: [

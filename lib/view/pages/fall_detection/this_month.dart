@@ -32,15 +32,18 @@ class ThisMonth extends StatelessWidget {
         children: [
           MonthlyFallChart(),
           SizedBox(height: 20,),
-          Container(
-            height: 300,
-            width: 400,
-            child: GoogleMap(
-              mapType: MapType.hybrid,
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
+          ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+            child: Container(
+              height: 300,
+              width: 400,
+              child: GoogleMap(
+                mapType: MapType.hybrid,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              ),
             ),
           )
         ],
