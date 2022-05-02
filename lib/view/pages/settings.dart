@@ -1,7 +1,11 @@
+import 'package:companera/services/authentication.dart';
 import 'package:companera/view/widgets/settings_group.dart';
 import 'package:companera/view/widgets/settings_group_item.dart';
+import 'package:companera/view/widgets/settings_group_slider_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../../constants/app-colors.dart';
@@ -45,7 +49,31 @@ class _SettingsState extends State<Settings> {
                       SettingsGroup(
                         heading: 'Fall Detection',
                         children: [
-                          SettingsGroupItem(icon: LineIcons.running, title: 'Detect Falls', value: true, onChanged: (value){},)
+                          SettingsGroupItem(icon: LineIcons.running, title: 'Detect Falls', value: true, onChanged: (value){},),
+                          Divider(),
+                          SettingsGroupItem(icon: LineIcons.users, title: 'Emergency Contacts', onTap: (){},),
+                        ],
+                      ),
+                      SettingsGroup(
+                        heading: 'Reading',
+                        children: [
+                          SettingsGroupSliderItem(value: 0.5, onChanged: (value){}, title: 'Speech Rate'),
+                          Divider(),
+                          SettingsGroupSliderItem(value: 1, onChanged: (value){}, title: 'Speech Volume'),
+                          Divider(),
+                          SettingsGroupSliderItem(value: 1, onChanged: (value){}, title: 'Speech Pitch'),
+                        ],
+                      ),
+                      SettingsGroup(
+                          heading: 'Account',
+                        children: [
+                          SettingsGroupItem(icon: Icons.logout, title: 'Log out', onTap: (){
+                            AuthService.signOut(context);
+                          },),
+                          Divider(),
+                          SettingsGroupItem(icon: LineIcons.trash, title: 'Delete Account', color: Colors.red, onTap: (){
+                            AuthService.deleteAccount(context);
+                          },)
                         ],
                       )
                     ],

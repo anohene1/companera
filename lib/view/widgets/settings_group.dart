@@ -19,16 +19,19 @@ class SettingsGroup extends StatelessWidget {
             color: HexColor.fromHex("666A7A"),
           ),
         ),
-        SizedBox(height: 10,),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: AppColors.primaryBackgroundColor),
-          child: Column(
-            children: children,
+        const SizedBox(height: 10,),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: AppColors.primaryBackgroundColor),
+            child: Column(
+              children: children,
+            ),
           ),
         ),
+        const SizedBox(height: 25,)
       ],
     );
   }
