@@ -30,7 +30,11 @@ class AuthService {
 
     if (response == AlertButton.yesButton) {
       //TODO delete account
-      print('Delete account confirmed');
+      FirebaseAuth.instance.currentUser?.delete().then((value) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => AuthScreen()),
+                (Route<dynamic> route) => false);
+      });
     }
   }
 
