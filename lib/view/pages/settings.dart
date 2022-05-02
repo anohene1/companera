@@ -1,6 +1,8 @@
 import 'package:companera/view/widgets/settings_group.dart';
+import 'package:companera/view/widgets/settings_group_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:line_icons/line_icons.dart';
 
 import '../../constants/app-colors.dart';
 import '../widgets/dark_radial_background.dart';
@@ -41,8 +43,9 @@ class _SettingsState extends State<Settings> {
                   child: Column(
                     children: [
                       SettingsGroup(
+                        heading: 'Fall Detection',
                         children: [
-                          ListTile(title: Text('name'),)
+                          SettingsGroupItem(icon: LineIcons.running, title: 'Detect Falls', value: true, onChanged: (value){},)
                         ],
                       )
                     ],

@@ -35,8 +35,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0xff246CFE),
         brightness: Brightness.dark,
-        textTheme: GoogleFonts.montserratTextTheme(ThemeData.dark().textTheme)
-
+        textTheme: GoogleFonts.montserratTextTheme(ThemeData.dark().textTheme),
       ),
       home: AuthService().signedInUser == null ? AuthScreen() : HomeScreen(),
     );
