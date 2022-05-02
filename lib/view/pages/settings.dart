@@ -1,3 +1,4 @@
+import 'package:companera/view/widgets/settings_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,7 +36,18 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 160),
+                padding: EdgeInsets.only(top: 140, left: 20, right: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SettingsGroup(
+                        children: [
+                          ListTile(title: Text('name'),)
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               )
             ],
           )
