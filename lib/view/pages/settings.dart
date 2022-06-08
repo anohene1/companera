@@ -1,3 +1,4 @@
+import 'package:companera/providers/speech_settings.dart';
 import 'package:companera/services/authentication.dart';
 import 'package:companera/view/widgets/settings_group.dart';
 import 'package:companera/view/widgets/settings_group_item.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/app-colors.dart';
 import '../widgets/dark_radial_background.dart';
@@ -49,31 +51,67 @@ class _SettingsState extends State<Settings> {
                       SettingsGroup(
                         heading: 'Fall Detection',
                         children: [
-                          SettingsGroupItem(icon: LineIcons.running, title: 'Detect Falls', value: true, onChanged: (value){},),
+                          SettingsGroupItem(
+                            icon: LineIcons.running,
+                            title: 'Detect Falls',
+                            value: true,
+                            onChanged: (value) {},
+                          ),
                           Divider(),
-                          SettingsGroupItem(icon: LineIcons.users, title: 'Emergency Contacts', onTap: (){},),
+                          SettingsGroupItem(
+                            icon: LineIcons.users,
+                            title: 'Emergency Contacts',
+                            onTap: () {},
+                          ),
                         ],
                       ),
+                      Consumer<SpeechSettings>(
+                          builder: (context, settings, child) {
+                        return SettingsGroup(
+                          heading: 'Reading',
+                          children: [
+                            SettingsGroupSliderItem(
+                                value: settings.speechRate,
+                                onChanged: (value) {
+                                  settings.setSpeechRate(value);
+                                },
+                                title: 'Speech Rate'),
+                            Divider(),
+                            SettingsGroupSliderItem(
+                                value: settings.speechVolume,
+                                onChanged: (value) {
+                                  settings.setSpeechVolume(value);
+                                },
+                                title: 'Speech Volume'),
+                            Divider(),
+                            SettingsGroupSliderItem(
+                                value: settings.speechPitch,
+                                onChanged: (value) {
+                                  settings.setSpeechPitch(value);
+                                },
+                                title: 'Speech Pitch'),
+                          ],
+                        );
+                      }),
                       SettingsGroup(
-                        heading: 'Reading',
+                        heading: 'Account',
                         children: [
-                          SettingsGroupSliderItem(value: 0.5, onChanged: (value){}, title: 'Speech Rate'),
+                          SettingsGroupItem(
+                            icon: Icons.logout,
+                            title: 'Log out',
+                            onTap: () {
+                              AuthService.signOut(context);
+                            },
+                          ),
                           Divider(),
-                          SettingsGroupSliderItem(value: 1, onChanged: (value){}, title: 'Speech Volume'),
-                          Divider(),
-                          SettingsGroupSliderItem(value: 1, onChanged: (value){}, title: 'Speech Pitch'),
-                        ],
-                      ),
-                      SettingsGroup(
-                          heading: 'Account',
-                        children: [
-                          SettingsGroupItem(icon: Icons.logout, title: 'Log out', onTap: (){
-                            AuthService.signOut(context);
-                          },),
-                          Divider(),
-                          SettingsGroupItem(icon: LineIcons.trash, title: 'Delete Account', color: Colors.red, onTap: (){
-                            AuthService.deleteAccount(context);
-                          },)
+                          SettingsGroupItem(
+                            icon: LineIcons.trash,
+                            title: 'Delete Account',
+                            color: Colors.red,
+                            onTap: () {
+                              AuthService.deleteAccount(context);
+                            },
+                          )
                         ],
                       )
                     ],
@@ -81,8 +119,7 @@ class _SettingsState extends State<Settings> {
                 ),
               )
             ],
-          )
-      ),
+          )),
     );
   }
 }

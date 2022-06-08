@@ -1,4 +1,5 @@
 import 'package:companera/providers/fall_detection_tabs.dart';
+import 'package:companera/providers/speech_settings.dart';
 import 'package:companera/services/authentication.dart';
 import 'package:companera/view/pages/auth.dart';
 import 'package:companera/view/pages/home.dart';
@@ -18,9 +19,10 @@ void main() async {
   );
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<FallDetectionTabs>(create: (context) => FallDetectionTabs())
+      ChangeNotifierProvider<FallDetectionTabs>(create: (context) => FallDetectionTabs()),
+      ChangeNotifierProvider<SpeechSettings>(create: (context) => SpeechSettings()),
     ],
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         textTheme: GoogleFonts.montserratTextTheme(ThemeData.dark().textTheme),
       ),
-      home: AuthService().signedInUser == null ? AuthScreen() : HomeScreen(),
+      home: AuthService().signedInUser == null ? AuthScreen() : const HomeScreen(),
     );
   }
 }
