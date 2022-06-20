@@ -1,5 +1,6 @@
 import 'package:companera/providers/speech_settings.dart';
 import 'package:companera/services/authentication.dart';
+import 'package:companera/view/pages/settings/emergency_contacts.dart';
 import 'package:companera/view/widgets/settings_group.dart';
 import 'package:companera/view/widgets/settings_group_item.dart';
 import 'package:companera/view/widgets/settings_group_slider_item.dart';
@@ -10,8 +11,8 @@ import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants/app-colors.dart';
-import '../widgets/dark_radial_background.dart';
+import '../../../constants/app-colors.dart';
+import '../../widgets/dark_radial_background.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -61,7 +62,9 @@ class _SettingsState extends State<Settings> {
                           SettingsGroupItem(
                             icon: LineIcons.users,
                             title: 'Emergency Contacts',
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => EmergencyContactsScreen()));
+                            },
                           ),
                         ],
                       ),

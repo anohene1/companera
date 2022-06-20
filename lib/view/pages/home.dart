@@ -1,7 +1,7 @@
 import 'package:companera/services/authentication.dart';
 import 'package:companera/view/pages/auth.dart';
 import 'package:companera/view/pages/fall_detection/fall_detection.dart';
-import 'package:companera/view/pages/settings.dart';
+import 'package:companera/view/pages/settings/settings.dart';
 import 'package:companera/view/pages/sign_language.dart';
 import 'package:companera/view/pages/text_recoginition.dart';
 import 'package:flutter/material.dart';

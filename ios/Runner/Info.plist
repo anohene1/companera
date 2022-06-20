@@ -58,5 +58,20 @@
     <string>Allow access to Camera to be able to take a picture to read text from</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>I may need to be able to take videos, I'm not very sure about that though</string>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>dev.flutter.background.refresh</string>
+    </array>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>This app needs access to location.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app needs access to location.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location.</string>
+    <key>UIBackgroundModes</key>
+    <array>
+    	<string>fetch</string>
+    	<string>location</string>
+    </array>
 </dict>
 </plist>

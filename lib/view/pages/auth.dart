@@ -1,4 +1,6 @@
 import 'package:companera/constants/button_styles.dart';
+import 'package:companera/model/user.dart';
+import 'package:companera/services/db.dart';
 import 'package:companera/view/pages/home.dart';
 import 'package:companera/view/widgets/carousel_item.dart';
 import 'package:flutter/material.dart';
@@ -104,24 +106,42 @@ class _AuthScreenState extends State<AuthScreen> {
                           child: ElevatedButton(
                               onPressed: () {
                                 showDialog(
-                                    context: context, builder: (context){
-                                  return Container(
-                                    child: Center(child: CircularProgressIndicator()),
-                                  );
-                                },
-                                barrierDismissible: false
-                                );
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                        child: Center(
+                                            child: CircularProgressIndicator()),
+                                      );
+                                    },
+                                    barrierDismissible: false);
                                 //TODO: Handle errors
-                                AuthService.signInWithGoogle().then((value) =>
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeScreen()))
-                                ).onError((error, stackTrace) async {
+                                AuthService.signInWithGoogle()
+                                    .then((userCredential) {
+                                  User user = User(
+                                      name: userCredential.user!.displayName!,
+                                      email: userCredential.user!.email!,
+                                      uid: userCredential.user!.uid);
+                                  DB()
+                                      .addUser(user)
+                                      .then((value) =>
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeScreen())))
+                                      .onError((error, stackTrace) async {
+                                    await FlutterPlatformAlert.showAlert(
+                                        windowTitle: 'Unable to save user',
+                                        text:
+                                            'Please check your internet connection');
+                                  });
+                                }).onError((error, stackTrace) async {
                                   Navigator.pop(context);
                                   print(error);
-                                  await FlutterPlatformAlert.showAlert(windowTitle: 'Unable to sign in', text: 'Please check your internet connection and try again later');
+                                  await FlutterPlatformAlert.showAlert(
+                                      windowTitle: 'Unable to sign in',
+                                      text:
+                                          'Please check your internet connection and try again later');
                                 });
                               },
                               style: ButtonStyle(
