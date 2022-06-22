@@ -1,6 +1,7 @@
 import 'package:companera/providers/fall_detection_tabs.dart';
 import 'package:companera/providers/speech_settings.dart';
 import 'package:companera/services/authentication.dart';
+import 'package:companera/services/fall_detector.dart';
 import 'package:companera/view/pages/auth.dart';
 import 'package:companera/view/pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FallDetector().initializeBackgroundService();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<FallDetectionTabs>(create: (context) => FallDetectionTabs()),

@@ -7,6 +7,7 @@ import 'package:companera/view/widgets/settings_group_slider_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,11 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+
+  final backgroundService = FlutterBackgroundService();
+  bool switchValue = false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +61,18 @@ class _SettingsState extends State<Settings> {
                           SettingsGroupItem(
                             icon: LineIcons.running,
                             title: 'Detect Falls',
-                            value: true,
-                            onChanged: (value) {},
+                            value: switchValue,
+                            onChanged: (value) {
+                              if (value) {
+                                backgroundService.startService();
+                              } else {
+                                backgroundService.invoke('stopService');
+                              }
+
+                              setState(() {
+                                switchValue = value;
+                              });
+                            },
                           ),
                           Divider(),
                           SettingsGroupItem(

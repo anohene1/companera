@@ -55,14 +55,17 @@ class _EmergencyContactsScreenState extends State<EmergencyContactsScreen> {
               stream: database.emergencyContactsStream(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text('Oopsie...', style: GoogleFonts.lato(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),),
-                      Text('An error occurred: ${snapshot.error.toString()}', style: TextStyle(fontSize: 18, color: HexColor.fromHex("666A7A")))
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text('Oopsie...', style: GoogleFonts.lato(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),),
+                        Text('An error occurred: ${snapshot.error.toString()}', style: TextStyle(fontSize: 18, color: HexColor.fromHex("666A7A")))
+                      ],
+                    ),
                   );
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -72,14 +75,17 @@ class _EmergencyContactsScreenState extends State<EmergencyContactsScreen> {
                   );
                 }
                 if (snapshot.data!.docs.isEmpty) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text('Nobody\'s here :(', style: GoogleFonts.lato(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),),
-                      Text('Add people who should be contacted in case you fall (although we hope you don\'t)', style: TextStyle(fontSize: 18, color: HexColor.fromHex("666A7A")))
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text('Nobody\'s here :(', style: GoogleFonts.lato(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),),
+                        Text('Add people who should be contacted in case you fall (although we hope you don\'t)', style: TextStyle(fontSize: 18, color: HexColor.fromHex("666A7A")))
+                      ],
+                    ),
                   );
                 }
                 return ListView.builder(
