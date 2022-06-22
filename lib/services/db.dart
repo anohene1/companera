@@ -30,7 +30,7 @@ class DB {
   }
 
   Stream<QuerySnapshot> emergencyContactsStream() {
-    return users.doc(signedInUser?.uid).collection('emergency_contacts').snapshots();
+    return users.doc(signedInUser?.uid).collection('emergency_contacts').orderBy('name').snapshots();
   }
 
   Future<void> deleteEmergencyContact(String id) {
