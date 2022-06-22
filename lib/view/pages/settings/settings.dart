@@ -12,6 +12,7 @@ import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
+import '../../../caches/cache.dart';
 import '../../../constants/app-colors.dart';
 import '../../widgets/dark_radial_background.dart';
 
@@ -22,14 +23,19 @@ class Settings extends StatefulWidget {
   State<Settings> createState() => _SettingsState();
 }
 
+bool? switchValue;
+
+getSwitchValue() async {
+  switchValue = await Cache.getBool(key: 'run_fall_detector');
+}
+
 class _SettingsState extends State<Settings> {
 
   final backgroundService = FlutterBackgroundService();
-  bool switchValue = false;
-
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -63,12 +69,12 @@ class _SettingsState extends State<Settings> {
                             title: 'Detect Falls',
                             value: switchValue,
                             onChanged: (value) {
+                              Cache.saveBool(key: 'run_fall_detector', value: value);
                               if (value) {
                                 backgroundService.startService();
                               } else {
                                 backgroundService.invoke('stopService');
                               }
-
                               setState(() {
                                 switchValue = value;
                               });

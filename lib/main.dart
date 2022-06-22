@@ -4,6 +4,7 @@ import 'package:companera/services/authentication.dart';
 import 'package:companera/services/fall_detector.dart';
 import 'package:companera/view/pages/auth.dart';
 import 'package:companera/view/pages/home.dart';
+import 'package:companera/view/pages/settings/settings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FallDetector().initializeBackgroundService();
+  getSwitchValue();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<FallDetectionTabs>(create: (context) => FallDetectionTabs()),
