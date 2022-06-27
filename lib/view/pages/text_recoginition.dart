@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../constants/app-colors.dart';
+
 class TextRecognitionScreen extends StatefulWidget {
   const TextRecognitionScreen({Key? key}) : super(key: key);
 
@@ -54,10 +56,29 @@ class _TextRecognitionScreenState extends State<TextRecognitionScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           imageFile == null
-              ? const Icon(
-                  Icons.photo,
-                  size: 50,
-                )
+              ? Container(
+            height: 300,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: HexColor.fromHex('666A7A'),
+                style: BorderStyle.solid
+              )
+            ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                        Icons.photo,
+                        size: 50,
+                      ),
+                    SizedBox(height: 20,),
+                    Text('Press Pick Image or Take Picture to load an image to read.', style: TextStyle(fontSize: 18, color: HexColor.fromHex("666A7A")))
+                  ],
+                ),
+              )
               : Image.file(
                   imageFile!,
                   height: 300,
