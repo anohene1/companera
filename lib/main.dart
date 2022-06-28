@@ -20,8 +20,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  BackgroundService().initializeBackgroundService();
   getSwitchValue();
+  BackgroundService().initializeBackgroundService();
   AwesomeNotifications().initialize(
       null,
       [
@@ -41,6 +41,16 @@ void main() async {
       ],
       debug: true
   );
+  AwesomeNotifications().actionStream.listen((action) {
+    if(action.buttonKeyPressed == "true"){
+      print("True button is pressed");
+    }else if(action.buttonKeyPressed == "false"){
+      print("False button is pressed.");
+    }else{
+      print('notification was pressed'); //notification was pressed
+    }
+  });
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<FallDetectionTabs>(create: (context) => FallDetectionTabs()),
@@ -55,16 +65,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    AwesomeNotifications().actionStream.listen((action) {
-      if(action.buttonKeyPressed == "true"){
-        print("True button is pressed");
-      }else if(action.buttonKeyPressed == "false"){
-        print("False button is pressed.");
-      }else{
-        print('notification was pressed'); //notification was pressed
-      }
-    });
 
     return MaterialApp(
       title: 'Compañera',

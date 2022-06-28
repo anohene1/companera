@@ -26,7 +26,11 @@ class Settings extends StatefulWidget {
 bool? switchValue;
 
 getSwitchValue() async {
-  switchValue = await Cache.getBool(key: 'run_fall_detector');
+  if (await Cache.getBool(key: 'run_fall_detector') == null) {
+    switchValue = false;
+  } else {
+    switchValue = await Cache.getBool(key: 'run_fall_detector');
+  }
 }
 
 class _SettingsState extends State<Settings> {
