@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:companera/providers/fall_detection_tabs.dart';
 import 'package:companera/providers/speech_settings.dart';
 import 'package:companera/services/authentication.dart';
@@ -21,6 +22,25 @@ void main() async {
   );
   BackgroundService().initializeBackgroundService();
   getSwitchValue();
+  AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+            channelGroupKey: 'companera_channel_group',
+            channelKey: 'companera_channel',
+            channelName: 'Fall Detection Notifications',
+            channelDescription: 'Notification channel for when falls are detected',
+            defaultColor: Color(0xff246CFE),
+            ledColor: Colors.white)
+      ],
+      // Channel groups are only visual and are not required
+      channelGroups: [
+        NotificationChannelGroup(
+            channelGroupkey: 'companera_channel_group',
+            channelGroupName: 'Companera group')
+      ],
+      debug: true
+  );
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<FallDetectionTabs>(create: (context) => FallDetectionTabs()),
@@ -35,6 +55,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    AwesomeNotifications().actionStream.listen((action) {
+      if(action.buttonKeyPressed == "true"){
+        print("True button is pressed");
+      }else if(action.buttonKeyPressed == "false"){
+        print("False button is pressed.");
+      }else{
+        print('notification was pressed'); //notification was pressed
+      }
+    });
+
     return MaterialApp(
       title: 'Compañera',
       themeMode: ThemeMode.dark,

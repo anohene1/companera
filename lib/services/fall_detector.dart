@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:math';
 
@@ -21,6 +22,38 @@ class FallDetector {
 
 
         // Show notification
+        AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+          if (!isAllowed) {
+
+            AwesomeNotifications().requestPermissionToSendNotifications();
+          } else {
+            AwesomeNotifications().createNotification(
+                content: NotificationContent( //
+                  wakeUpScreen: true,
+                  fullScreenIntent: true,
+                  showWhen: true,// simgple notification
+                  id: 123,
+                  channelKey: 'companera_channel', //set configuration wuth key "basic"
+                  title: 'Looks like a fall has occurred.',
+                  body: 'Click on False if this is not a real fall.',
+                  // payload: {"name":"FlutterCampus"},
+                  autoDismissible: false,
+                ),
+
+                actionButtons: [
+                  NotificationActionButton(
+                    key: "true",
+                    label: "True",
+                  ),
+
+                  NotificationActionButton(
+                    key: "false",
+                    label: "False",
+                  )
+                ]
+            );
+          }
+        });
         // If notification is not attended to or is confirmed, get location and send sms
       }
     });
