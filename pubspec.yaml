@@ -36,7 +36,8 @@ dependencies:
   google_ml_vision: 0.0.6
   flutter_tts: ^3.4.0
   flutter_background_service: ^2.1.3
-  background_location: ^0.8.1
+  background_location:
+    git: https://github.com/kleeb/background_location.git
   fluttercontactpicker: ^4.6.0
   flutter_sms: ^2.3.3
   flutter_slidable: ^1.3.0

@@ -8,8 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app-colors.dart';
 
 class Utils {
-  static final double screenWidth = MediaQueryData.fromWindow(WidgetsBinding.instance!.window).size.width;
-  static final double screenHeight = MediaQueryData.fromWindow(WidgetsBinding.instance!.window).size.height;
+  static final double screenWidth = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width;
+  static final double screenHeight = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
 }
 
 class SineCurve extends Curve {
