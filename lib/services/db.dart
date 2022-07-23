@@ -3,6 +3,8 @@ import 'package:companera/model/emergency_contact.dart';
 import 'package:companera/model/user.dart';
 import 'package:companera/services/authentication.dart';
 
+import '../model/fall.dart';
+
 class DB {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   final signedInUser = AuthService().signedInUser;
@@ -35,5 +37,19 @@ class DB {
 
   Future<void> deleteEmergencyContact(String id) {
     return users.doc(signedInUser?.uid).collection('emergency_contacts').doc(id).delete().then((value) => print('contact deleted'));
+  }
+
+  Future<void> addFall(Fall fall) {
+    return users
+        .doc(signedInUser?.uid)
+        .collection('falls')
+        .add({'latitude': fall.latitude, 'longitude': fall.longitude, 'timestamp': fall.timestamp})
+        .then((value) => print('fall added'))
+        .catchError(
+            (error) => print('failed to add fall: $error'));
+  }
+
+  Stream<QuerySnapshot> streamFalls() {
+    return users.doc(signedInUser?.uid).collection('falls').orderBy('timestamp').snapshots();
   }
 }
