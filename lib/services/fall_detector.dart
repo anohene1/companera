@@ -4,12 +4,24 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:companera/model/fall.dart';
 import 'package:companera/services/db.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:math';
 
 
 class FallDetector {
-  static void detectFalls() {
+
+  late Timer timer;
+
+  void cancelFallTimer() {
+    timer.cancel();
+  }
+
+  Future<void> detectFalls() async {
+
+    await Firebase.initializeApp();
+    DB database = DB();
+
 
     userAccelerometerEvents.listen((UserAccelerometerEvent event) {
       double ax, ay, az;
@@ -45,14 +57,10 @@ class FallDetector {
                   title: 'Looks like a fall has occurred.',
                   body: 'Click on False if this is not a real fall.',
                   // payload: {"name":"FlutterCampus"},
-                  autoDismissible: false,
+                  autoDismissible: true,
                 ),
 
                 actionButtons: [
-                  NotificationActionButton(
-                    key: "true",
-                    label: "True",
-                  ),
 
                   NotificationActionButton(
                     key: "false",
@@ -60,11 +68,11 @@ class FallDetector {
                   )
                 ]
             ).then((value) {
-            Timer(const Duration(seconds: 30), () {
+            timer = Timer(const Duration(seconds: 30), () {
               Fall fall = Fall(latitude: 3.2, longitude: 1.1, timestamp: Timestamp.now());
               AwesomeNotifications().dismiss(123);
               AwesomeNotifications().createNotification(
-                  content: NotificationContent( //
+                content: NotificationContent( //
                   wakeUpScreen: true,
                   fullScreenIntent: true,
                   showWhen: true,
@@ -74,8 +82,8 @@ class FallDetector {
                   body: 'We have notified your emergency contacts about this fall',
                   // payload: {"name":"FlutterCampus"},
                   autoDismissible: false,
-              ),);
-              DB().addFall(fall);
+                ),);
+              database.addFall(fall);
             });
             });
           }
@@ -84,4 +92,6 @@ class FallDetector {
       }
     });
   }
+
+
 }

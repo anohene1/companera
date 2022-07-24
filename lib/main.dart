@@ -3,6 +3,7 @@ import 'package:companera/providers/fall_detection_tabs.dart';
 import 'package:companera/providers/speech_settings.dart';
 import 'package:companera/services/authentication.dart';
 import 'package:companera/services/background_service.dart';
+import 'package:companera/services/fall_detector.dart';
 import 'package:companera/view/pages/auth.dart';
 import 'package:companera/view/pages/home.dart';
 import 'package:companera/view/pages/settings/settings.dart';
@@ -17,9 +18,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
   getSwitchValue();
   BackgroundService().initializeBackgroundService();
   AwesomeNotifications().initialize(
@@ -42,10 +41,9 @@ void main() async {
       debug: true
   );
   AwesomeNotifications().actionStream.listen((action) {
-    if(action.buttonKeyPressed == "true"){
-      print("True button is pressed");
-    }else if(action.buttonKeyPressed == "false"){
+    if(action.buttonKeyPressed == "false"){
       print("False button is pressed.");
+      FallDetector().cancelFallTimer();
     }else{
       print('notification was pressed'); //notification was pressed
     }

@@ -74,7 +74,7 @@ void onStart(ServiceInstance service) async {
 
 
     //Detect falls
-    FallDetector.detectFalls();
+    FallDetector().detectFalls();
 
   });
 }

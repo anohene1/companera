@@ -43,7 +43,7 @@ class DB {
     return users
         .doc(signedInUser?.uid)
         .collection('falls')
-        .add({'latitude': fall.latitude, 'longitude': fall.longitude, 'timestamp': fall.timestamp})
+        .add({'latitude': fall.latitude, 'longitude': fall.longitude, 'timestamp': fall.timestamp.millisecondsSinceEpoch})
         .then((value) => print('fall added'))
         .catchError(
             (error) => print('failed to add fall: $error'));

@@ -9,6 +9,7 @@ import 'package:line_icons/line_icons.dart';
 
 import '../../../constants/app-colors.dart';
 import '../../../model/emergency_contact.dart';
+import '../../../model/fall.dart';
 import '../../widgets/dark_radial_background.dart';
 
 class EmergencyContactsScreen extends StatefulWidget {
