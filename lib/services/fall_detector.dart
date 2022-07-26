@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:background_location/background_location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:companera/model/fall.dart';
 import 'package:companera/services/db.dart';
@@ -21,6 +22,7 @@ class FallDetector {
 
     await Firebase.initializeApp();
     DB database = DB();
+
 
 
     userAccelerometerEvents.listen((UserAccelerometerEvent event) {
@@ -68,8 +70,7 @@ class FallDetector {
                   )
                 ]
             ).then((value) {
-            timer = Timer(const Duration(seconds: 30), () {
-              Fall fall = Fall(latitude: 3.2, longitude: 1.1, timestamp: Timestamp.now());
+            timer = Timer(const Duration(seconds: 30), () async {
               AwesomeNotifications().dismiss(123);
               AwesomeNotifications().createNotification(
                 content: NotificationContent( //
@@ -83,7 +84,16 @@ class FallDetector {
                   // payload: {"name":"FlutterCampus"},
                   autoDismissible: false,
                 ),);
-              database.addFall(fall);
+              bool hasGottenLocation = false;
+              BackgroundLocation.startLocationService();
+              await BackgroundLocation.getLocationUpdates((location) {
+                if (!hasGottenLocation) {
+                  hasGottenLocation = true;
+                  Fall fall = Fall(latitude: location.latitude!, longitude: location.longitude!, timestamp: Timestamp.now());
+                  database.addFall(fall);
+                  BackgroundLocation.stopLocationService();
+                }
+              });
             });
             });
           }

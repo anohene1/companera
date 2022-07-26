@@ -1,5 +1,7 @@
+import 'package:background_location/background_location.dart';
 import 'package:companera/providers/speech_settings.dart';
 import 'package:companera/services/authentication.dart';
+import 'package:companera/services/location_service.dart';
 import 'package:companera/view/pages/settings/emergency_contacts.dart';
 import 'package:companera/view/widgets/settings_group.dart';
 import 'package:companera/view/widgets/settings_group_item.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 import '../../../caches/cache.dart';
@@ -36,6 +39,7 @@ getSwitchValue() async {
 class _SettingsState extends State<Settings> {
 
   final backgroundService = FlutterBackgroundService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +80,13 @@ class _SettingsState extends State<Settings> {
                               Cache.saveBool(key: 'run_fall_detector', value: value);
                               if (value) {
                                 backgroundService.startService();
+                                // BackgroundLocation.startLocationService();
+                                // LocationService().requestPermission();
+
                               } else {
                                 backgroundService.invoke('stopService');
+                                BackgroundLocation.stopLocationService();
+
                               }
                               setState(() {
                                 switchValue = value;

@@ -63,7 +63,6 @@ void onStart(ServiceInstance service) async {
 
 
   // bring to foreground
-  Timer.periodic(const Duration(seconds: 1), (timer) async {
 
     if (service is AndroidServiceInstance) {
       service.setForegroundNotificationInfo(
@@ -76,5 +75,5 @@ void onStart(ServiceInstance service) async {
     //Detect falls
     FallDetector().detectFalls();
 
-  });
+
 }
