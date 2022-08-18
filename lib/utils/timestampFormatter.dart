@@ -5,6 +5,7 @@ class TimestampFormatter {
   static String format(int timestamp) {
     DateTime date = Timestamp.fromMillisecondsSinceEpoch(timestamp).toDate();
     String dateString = DateFormat.yMMMMEEEEd().format(date);
-    return dateString;
+    String timeString = DateFormat.jm().format(date);
+    return '$dateString, $timeString';
   }
 }
