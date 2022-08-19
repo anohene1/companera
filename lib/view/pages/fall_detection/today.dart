@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:companera/services/db.dart';
+import 'package:companera/utils/date_time_extension.dart';
 import 'package:companera/utils/timestampFormatter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../constants/app-colors.dart';
+import '../../../model/fall.dart';
 
 class Today extends StatefulWidget {
   Today({Key? key}) : super(key: key);
@@ -34,17 +37,23 @@ class _TodayState extends State<Today> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return StreamBuilder<QuerySnapshot>(
       stream: database.streamFalls(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
+        List<Fall> fallsToday = snapshot.data!.docs
+            .map((e) => Fall(
+                latitude: e['latitude'],
+                longitude: e['longitude'],
+                timestamp: Timestamp.fromMillisecondsSinceEpoch(e['timestamp'])))
+            .where((element) =>
+                element.timestamp.toDate().isSameDate(DateTime.now()))
+            .toList();
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child:
-            CircularProgressIndicator(color: Theme.of(context).primaryColor,),
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
+            ),
           );
         }
         if (snapshot.hasError) {
@@ -55,19 +64,37 @@ class _TodayState extends State<Today> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text('Oopsie...', style: GoogleFonts.lato(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),),
-                Text('An error occurred: ${snapshot.error.toString()}', style: TextStyle(fontSize: 18, color: HexColor.fromHex("666A7A")))
+                Text(
+                  'Oopsie...',
+                  style: GoogleFonts.lato(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text('An error occurred: ${snapshot.error.toString()}',
+                    style: TextStyle(
+                        fontSize: 18, color: HexColor.fromHex("666A7A")))
               ],
             ),
           );
         }
-        if (snapshot.data!.docs.isEmpty) {
+        if (fallsToday.isEmpty) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('No falls recorded!', style: GoogleFonts.lato(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),),
-              Text('You are doing very well today, no falls have been detected.', style: TextStyle(fontSize: 18, color: HexColor.fromHex("666A7A")),)
+              Text(
+                'No falls recorded!',
+                style: GoogleFonts.lato(
+                    color: Colors.white,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'You are doing very well today, no falls have been detected.',
+                style:
+                    TextStyle(fontSize: 18, color: HexColor.fromHex("666A7A")),
+              )
             ],
           );
         }
@@ -78,19 +105,22 @@ class _TodayState extends State<Today> {
               Container(
                 height: 300,
                 child: ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
+                  itemCount: fallsToday.length,
                   itemBuilder: (context, index) {
-                    final list = snapshot.data!.docs;
-                    DocumentSnapshot document = list[index];
-                    final data = document.data()! as Map<String, dynamic>;
                     return ListTile(
                       title: Text('Fall ${index + 1}'),
-                      subtitle: Text(TimestampFormatter.format(data['timestamp'])),
+                      subtitle: Text(TimestampFormatter.format(
+                          fallsToday[index].timestamp.millisecondsSinceEpoch)),
+                      onTap: () async {
+                        launchUrlString('https://www.google.com/maps/search/?api=1&query=${fallsToday[index].latitude},${fallsToday[index].longitude}');
+                      },
                     );
                   },
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
@@ -99,14 +129,14 @@ class _TodayState extends State<Today> {
                   child: GoogleMap(
                     mapType: MapType.hybrid,
                     initialCameraPosition: Today._kGooglePlex,
-                    markers: snapshot.data!.docs.map((DocumentSnapshot element) {
-                      final data = element.data()! as Map<String, dynamic>;
+                    markers: fallsToday.map((fall) {
                       return Marker(
-                          markerId: MarkerId(data['timestamp'].toString()),
+                          markerId: MarkerId(fall.timestamp.toString()),
                           icon: BitmapDescriptor.defaultMarker,
-                          position: LatLng(data['latitude'], data['longitude']),
-                          infoWindow: InfoWindow(title: TimestampFormatter.format(data['timestamp']))
-                      );
+                          position: LatLng(fall.latitude, fall.longitude),
+                          infoWindow: InfoWindow(
+                              title: TimestampFormatter.format(
+                                  fall.timestamp.millisecondsSinceEpoch)));
                     }).toSet(),
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
@@ -117,8 +147,7 @@ class _TodayState extends State<Today> {
             ],
           ),
         );
-    },
+      },
     );
   }
 }
-

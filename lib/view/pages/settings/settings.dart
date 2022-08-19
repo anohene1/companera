@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
-import 'package:flutter_sms/flutter_sms.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
