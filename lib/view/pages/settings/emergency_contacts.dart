@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:companera/providers/emergency_contacts_provider.dart';
 import 'package:companera/services/contact_picker.dart';
 import 'package:companera/services/db.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/app-colors.dart';
 import '../../../model/emergency_contact.dart';
@@ -89,6 +91,7 @@ class _EmergencyContactsScreenState extends State<EmergencyContactsScreen> {
                     ),
                   );
                 }
+                Provider.of<EmergencyContactsProvider>(context).setContacts(snapshot.data!.docs.map((e) => EmergencyContact(name: e['name'], number: e['number'])).toList());
                 return ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {

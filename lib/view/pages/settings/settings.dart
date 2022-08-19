@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../caches/cache.dart';
@@ -33,6 +35,16 @@ getSwitchValue() async {
     switchValue = false;
   } else {
     switchValue = await Cache.getBool(key: 'run_fall_detector');
+  }
+}
+
+getSMSPermission() async {
+  var status = await Permission.sms.status;
+  if (status.isDenied) {
+    await Permission.sms.request();
+  }
+  if (status.isPermanentlyDenied) {
+    openAppSettings();
   }
 }
 
@@ -79,6 +91,7 @@ class _SettingsState extends State<Settings> {
                             onChanged: (value) {
                               Cache.saveBool(key: 'run_fall_detector', value: value);
                               if (value) {
+                                getSMSPermission();
                                 backgroundService.startService();
                                 // BackgroundLocation.startLocationService();
                                 // LocationService().requestPermission();
@@ -146,7 +159,7 @@ class _SettingsState extends State<Settings> {
                             icon: LineIcons.trash,
                             title: 'Delete Account',
                             color: Colors.red,
-                            onTap: () {
+                            onTap: () async {
                               AuthService.deleteAccount(context);
                             },
                           )

@@ -44,6 +44,8 @@ dependencies:
   awesome_notifications: ^0.6.21
   location: ^4.4.0
   intl: ^0.17.0
+  permission_handler: ^10.0.0
+  background_sms: ^0.0.4
 
 
 dev_dependencies:
