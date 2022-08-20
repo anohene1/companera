@@ -4,6 +4,26 @@ extension DateOnlyCompare on DateTime {
         && day == other.day;
   }
 
+  bool isSameMonth(DateTime other) {
+    return year == other.year && month == other.month;
+  }
+
+  bool isFirstWeek() {
+    return day < 8;
+  }
+
+  bool isSecondWeek() {
+    return day > 7 && day < 15;
+  }
+
+  bool isThirdWeek() {
+    return day > 14 && day < 22;
+  }
+
+  bool isLastWeek() {
+    return day > 21;
+  }
+
   bool isSameWeek(DateTime other) {
     final date = DateTime.utc(year, month, day);
     other = DateTime.utc(other.year, other.month, other.day);
