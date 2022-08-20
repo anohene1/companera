@@ -1,8 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/fall.dart';
+
 class WeeklyFallChart extends StatelessWidget {
-  const WeeklyFallChart({Key? key}) : super(key: key);
+  final List<Fall> falls;
+  WeeklyFallChart({Key? key, required this.falls}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,7 @@ class WeeklyFallChart extends StatelessWidget {
                 barTouchData: barTouchData,
                 titlesData: titlesData,
                 borderData: borderData,
-                barGroups: barGroups,
+                barGroups: barGroups(falls),
                 gridData: FlGridData(show: false),
                 alignment: BarChartAlignment.spaceAround,
                 maxY: 20,
@@ -140,12 +144,21 @@ class WeeklyFallChart extends StatelessWidget {
     end: Alignment.topCenter,
   );
 
-  List<BarChartGroupData> get barGroups => [
+  List<BarChartGroupData> barGroups(List<Fall> falls) {
+    int sundayFalls = falls.where((element) => element.timestamp.toDate().weekday == DateTime.sunday).length;
+    int mondayFalls = falls.where((element) => element.timestamp.toDate().weekday == DateTime.monday).length;
+    int tuesdayFalls = falls.where((element) => element.timestamp.toDate().weekday == DateTime.tuesday).length;
+    int wednesdayFalls = falls.where((element) => element.timestamp.toDate().weekday == DateTime.wednesday).length;
+    int thursdayFalls = falls.where((element) => element.timestamp.toDate().weekday == DateTime.thursday).length;
+    int fridayFalls = falls.where((element) => element.timestamp.toDate().weekday == DateTime.friday).length;
+    int saturdayFalls = falls.where((element) => element.timestamp.toDate().weekday == DateTime.saturday).length;
+
+    return [
     BarChartGroupData(
       x: 0,
       barRods: [
         BarChartRodData(
-          toY: 2,
+          toY: double.parse(sundayFalls.toString()),
           gradient: _barsGradient,
         )
       ],
@@ -155,7 +168,7 @@ class WeeklyFallChart extends StatelessWidget {
       x: 1,
       barRods: [
         BarChartRodData(
-          toY: 10,
+          toY: double.parse(mondayFalls.toString()),
           gradient: _barsGradient,
         )
       ],
@@ -165,7 +178,7 @@ class WeeklyFallChart extends StatelessWidget {
       x: 2,
       barRods: [
         BarChartRodData(
-          toY: 14,
+          toY: double.parse(tuesdayFalls.toString()),
           gradient: _barsGradient,
         )
       ],
@@ -175,7 +188,7 @@ class WeeklyFallChart extends StatelessWidget {
       x: 3,
       barRods: [
         BarChartRodData(
-          toY: 15,
+          toY: double.parse(wednesdayFalls.toString()),
           gradient: _barsGradient,
         )
       ],
@@ -185,7 +198,7 @@ class WeeklyFallChart extends StatelessWidget {
       x: 4,
       barRods: [
         BarChartRodData(
-          toY: 13,
+          toY: double.parse(thursdayFalls.toString()),
           gradient: _barsGradient,
         )
       ],
@@ -195,7 +208,7 @@ class WeeklyFallChart extends StatelessWidget {
       x: 5,
       barRods: [
         BarChartRodData(
-          toY: 10,
+          toY: double.parse(fridayFalls.toString()),
           gradient: _barsGradient,
         )
       ],
@@ -205,33 +218,34 @@ class WeeklyFallChart extends StatelessWidget {
       x: 6,
       barRods: [
         BarChartRodData(
-          toY: 4,
+          toY: double.parse(saturdayFalls.toString()),
           gradient: _barsGradient,
         )
       ],
       showingTooltipIndicators: [0],
     ),
   ];
-}
-
-class BarChartSample3 extends StatefulWidget {
-  const BarChartSample3({Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => BarChartSample3State();
-}
-
-class BarChartSample3State extends State<BarChartSample3> {
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.7,
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        color: const Color(0xff2c4260),
-        child: const WeeklyFallChart(),
-      ),
-    );
   }
 }
+
+// class BarChartSample3 extends StatefulWidget {
+//   const BarChartSample3({Key? key}) : super(key: key);
+//
+//   @override
+//   State<StatefulWidget> createState() => BarChartSample3State();
+// }
+//
+// class BarChartSample3State extends State<BarChartSample3> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return AspectRatio(
+//       aspectRatio: 1.7,
+//       child: Card(
+//         elevation: 0,
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+//         color: const Color(0xff2c4260),
+//         child: WeeklyFallChart(),
+//       ),
+//     );
+//   }
+// }

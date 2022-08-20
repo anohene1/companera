@@ -3,4 +3,18 @@ extension DateOnlyCompare on DateTime {
     return year == other.year && month == other.month
         && day == other.day;
   }
+
+  bool isSameWeek(DateTime other) {
+    final date = DateTime.utc(year, month, day);
+    other = DateTime.utc(other.year, other.month, other.day);
+
+    final diff = date.toUtc().difference(other.toUtc()).inDays;
+    if(diff.abs() >= 7) {
+      return false;
+    }
+    final min = date.isBefore(other) ? date : other;
+    final max = date.isBefore(other) ? other : date;
+    final result = max.weekday % 7 - min.weekday % 7 >= 0;
+    return result;
+  }
 }
