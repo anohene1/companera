@@ -114,6 +114,7 @@ class FallDetector {
                                 '${database.signedInUser?.displayName} has fallen at https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}. Kindly check on them.');
                       });
                       BackgroundLocation.stopLocationService();
+                      _subscription.cancel();
                     }
                   });
                 });

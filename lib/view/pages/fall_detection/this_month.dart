@@ -45,7 +45,7 @@ class ThisMonth extends StatelessWidget {
             longitude: e['longitude'],
             timestamp: Timestamp.fromMillisecondsSinceEpoch(e['timestamp'])))
             .where((element) =>
-            element.timestamp.toDate().isSameWeek(DateTime.now()))
+            element.timestamp.toDate().isSameMonth(DateTime.now()))
             .toList();
 
         if (snapshot.connectionState == ConnectionState.waiting) {

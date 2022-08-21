@@ -1,3 +1,4 @@
+import 'package:companera/services/share_weekly_falls.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,9 @@ class WeeklyFallChart extends StatelessWidget {
                   color: Color(0xff7589a2),
                   fontSize: 16,
                 )),
-                IconButton(onPressed: (){}, icon: Icon(Icons.adaptive.share, color: Colors.white,))
+                IconButton(onPressed: (){
+                  shareWeeklyFalls(falls);
+                }, icon: Icon(Icons.adaptive.share, color: Colors.white,))
 
               ],
             ),

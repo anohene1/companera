@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   flutter_platform_alert
   flutter_tts
   permission_handler_windows
+  printing
   url_launcher_windows
 )
 
