@@ -49,6 +49,7 @@ dependencies:
   pdf: ^3.8.2
   printing: ^5.9.2
   path_provider: ^2.0.11
+  camera: ^0.10.0+1
 
 
 dev_dependencies:
@@ -63,3 +64,5 @@ flutter:
 
   assets:
     - assets/
+    - assets/model/labels.txt
+    - assets/model/models.tflite

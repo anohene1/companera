@@ -1,4 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:camera/camera.dart';
 import 'package:companera/providers/emergency_contacts_provider.dart';
 import 'package:companera/providers/fall_detection_tabs.dart';
 import 'package:companera/providers/speech_settings.dart';
